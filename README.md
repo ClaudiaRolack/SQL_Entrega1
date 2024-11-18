@@ -161,5 +161,5 @@ Registra los productos comprados en cada pedido.
 
 ## Diagrama Relacional
 
-![Diagrama](./images/diagrama.png)
+![Diagrama](./images/diagrama_buscalibre.png)
 
