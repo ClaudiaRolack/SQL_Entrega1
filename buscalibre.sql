@@ -3,7 +3,7 @@ CREATE DATABASE buscalibre;
 USE buscalibre;
 
 CREATE TABLE countries (
-    country_id INT PRIMARY KEY AUTO_INCREMENT,
+    country_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     currency VARCHAR(10) NOT NULL,
     language VARCHAR(10) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE countries (
 );
 
 CREATE TABLE publishers (
-    publisher_id INT PRIMARY KEY AUTO_INCREMENT,
+    publisher_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     contact_email VARCHAR(100) NOT NULL,
     phone_number VARCHAR(15) NOT NULL,
@@ -19,12 +19,12 @@ CREATE TABLE publishers (
 );
 
 CREATE TABLE categories (
-    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE customers (
-    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(15) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE customers (
 );
 
 CREATE TABLE products (
-    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     base_price DECIMAL(10, 2) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE products (
 );
 
 CREATE TABLE promotions (
-    promotion_id INT PRIMARY KEY AUTO_INCREMENT,
+    promotion_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     discount_percentage DECIMAL(5, 2),
     start_date DATE,
@@ -50,7 +50,7 @@ CREATE TABLE promotions (
 );
 
 CREATE TABLE reviews (
-    review_id INT PRIMARY KEY AUTO_INCREMENT,
+    review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
     product_id INT,
     rating INT CHECK (rating BETWEEN 1 AND 5) NOT NULL,
@@ -59,14 +59,14 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE orders (
-    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
     order_date DATE NOT NULL,
     total_amount DECIMAL(10, 2)
 );
 
 CREATE TABLE shipments (
-    shipment_id INT PRIMARY KEY AUTO_INCREMENT,
+    shipment_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     shipment_date DATE NOT NULL,
     tracking_number VARCHAR(50),
@@ -74,7 +74,7 @@ CREATE TABLE shipments (
 );
  
 CREATE TABLE payments (
-    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+    payment_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     payment_date DATE NOT NULL,
     amount DECIMAL(10, 2),
@@ -82,30 +82,30 @@ CREATE TABLE payments (
 );
 
 CREATE TABLE wishlist (
-    wishlist_id INT PRIMARY KEY AUTO_INCREMENT,
+    wishlist_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customer_id INT
 );
 
 CREATE TABLE product_categories (
-    product_category_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_category_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     product_id INT,
     category_id INT
 );
 
 CREATE TABLE wishlist_products (
-    wishlist_product_id INT PRIMARY KEY AUTO_INCREMENT,
+    wishlist_product_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     wishlist_id INT,
     product_id INT
 );
 
 CREATE TABLE product_promotions (
-    product_promotion_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_promotion_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     product_id INT,
     promotion_id INT
 );
 
 CREATE TABLE order_details (
-    order_detail_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_detail_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT NOT NULL,
