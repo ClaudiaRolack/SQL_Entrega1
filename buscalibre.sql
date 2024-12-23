@@ -427,3 +427,54 @@ END
 DELIMITER ;
 
 CALL sp_sales_report()
+
+
+-- TRIGGERS -----------------------------------------------------------------------------------------------
+
+
+-- trg_update_total_amount
+DELIMITER //
+
+CREATE TRIGGER trg_update_total_amount
+AFTER INSERT ON order_details
+FOR EACH ROW
+BEGIN
+    UPDATE orders
+    SET total_amount = (
+        SELECT SUM(quantity * price_at_purchase)
+        FROM order_details
+        WHERE order_id = NEW.order_id
+    )
+    WHERE order_id = NEW.order_id;
+END;
+
+//
+
+DELIMITER ;
+
+INSERT INTO order_details (order_id, product_id, quantity, price_at_purchase)
+VALUES (1, 2, 3, 15.50);
+
+SELECT total_amount FROM orders WHERE order_id = 1;
+
+
+-- trg_reduce_stock
+DELIMITER //
+
+CREATE TRIGGER trg_reduce_stock
+AFTER INSERT ON order_details
+FOR EACH ROW
+BEGIN
+    UPDATE products
+    SET stock = stock - NEW.quantity
+    WHERE product_id = NEW.product_id;
+END;
+
+//
+
+DELIMITER ;
+
+INSERT INTO order_details (order_id, product_id, quantity, price_at_purchase)
+VALUES (1, 1, 5, 19.99);
+
+SELECT stock FROM products WHERE product_id = 1;
