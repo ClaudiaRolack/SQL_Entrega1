@@ -161,7 +161,7 @@ Registra los productos comprados en cada pedido.
 
 ## Diagrama Relacional
 
-![Diagrama](./images/diagrama_buscalibre.png)
+![Diagrama](./images/diagrama/diagrama_buscalibre.png)
 
 # SQL_Entrega2
 
