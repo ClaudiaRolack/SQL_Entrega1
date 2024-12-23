@@ -188,6 +188,19 @@ ALTER TABLE
 	FOREIGN KEY (product_id) REFERENCES products(product_id);
 
 
+-- INSERCION DE DATOS -----------------------------------------------------------------------------------------------
+
+
+INSERT INTO customers (customer_id, name, email, phone_number, address, country_id)
+VALUES
+(12, 'pedro', 'pedro@email.com', '56987654321', 'calle las palmas 45, santiago, chile', 1),
+(13, 'isabella', 'isabella@email.com', '5491165432101', 'avenida 9 de julio 4567, buenos aires, argentina', 2),
+(14, 'esteban', 'esteban@email.com', '573015432109', 'carrera 30 # 10-22, medellin, colombia', 3),
+(15, 'sofia', 'sofia@email.com', '349612345678', 'calle de vallehermoso 234, barcelona, españa', 4),
+(16, 'raul', 'raul@email.com', '5215559876543', 'paseo de la reforma 1000, ciudad de mexico, mexico', 5),
+(17, 'veronica', 'veronica@email.com', '51987865432', 'jr. de la union 178, lima, peru', 6);
+
+
 -- VIEWS -----------------------------------------------------------------------------------------------
 
 -- v_top_products
@@ -372,3 +385,45 @@ DELIMITER ;
 
 
 SELECT get_total_sales_by_customer(1)
+
+
+-- STORED PROCEDURE -----------------------------------------------------------------------------------------------
+
+
+-- sp_create_promotion
+DELIMITER //
+
+CREATE PROCEDURE sp_create_promotion(
+    IN promotion_name VARCHAR(100),
+    IN discount_percentage DECIMAL(5,2),
+    IN start_date DATE,
+    IN end_date DATE
+)
+BEGIN
+    INSERT INTO promotions (name, discount_percentage, start_date, end_date)
+    VALUES (promotion_name, discount_percentage, start_date, end_date);
+END 
+
+//
+
+DELIMITER ;
+
+CALL sp_create_promotion('aniversario', 45.00, '2024-03-18', '2024-03-24');
+
+
+-- sp_sales_report
+DELIMITER //
+
+CREATE PROCEDURE sp_sales_report()
+BEGIN
+    SELECT p.name AS product_name, SUM(od.quantity) AS total_sold, SUM(od.quantity * od.price_at_purchase) AS total_revenue
+    FROM order_details od
+    JOIN products p ON od.product_id = p.product_id
+    GROUP BY p.product_id;
+END 
+
+//
+
+DELIMITER ;
+
+CALL sp_sales_report()
