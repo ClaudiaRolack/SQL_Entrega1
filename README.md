@@ -1,14 +1,77 @@
-# SQL_Entrega1
+# Entrega de proyecto final
 Simulación de base de datos de tienda virtual Buscalibre.
 
 # Proyecto de Base de Datos para Plataforma de Comercio Electrónico
 
-## Descripción General
+## Introducción
 Este proyecto define una base de datos relacional en MySQL diseñada para gestionar una plataforma de comercio electrónico similar a **Buscalibre**. 
 
 La plataforma se especializa en la venta de libros, productos electrónicos, juegos de mesa y otros artículos provenientes de diferentes partes del mundo, ofreciendo envíos a domicilio tanto dentro de Chile como a otros países. Además, es reconocida por su amplia variedad de títulos y por facilitar la importación de productos difíciles de encontrar en el mercado local.
 
 La base de datos organiza información clave sobre clientes, productos, categorías, pedidos, promociones, envíos, pagos y más, asegurando integridad referencial y escalabilidad.
+
+## Objetivo
+El objetivo principal de este proyecto es diseñar e implementar una base de datos relacional en MySQL que sirva como soporte fundamental para la gestión integral de una plataforma de comercio electrónico, inspirada en Buscalibre. Este sistema busca optimizar y organizar de manera eficiente las operaciones relacionadas con la venta de libros, productos electrónicos, juegos de mesa y otros artículos, garantizando una experiencia de usuario fluida y confiable.
+
+La base de datos está diseñada para cubrir múltiples aristas funcionales y cross-funcionales que son esenciales para el éxito de una plataforma de este tipo, incluyendo:
+
+- **Gestión de Información Contable:** Registrar transacciones financieras, controlar ingresos asociados a las ventas, y asegurar un seguimiento adecuado de los pagos realizados por los clientes.
+
+- **Logística y Envíos:** Manejar el flujo de envíos nacionales e internacionales, facilitando la integración de información sobre pedidos, direcciones de entrega y estados de los envíos, optimizando la cadena de suministro.
+
+- **Análisis y Toma de Decisiones:** Proveer una estructura de datos que permita realizar análisis detallados sobre el comportamiento de los clientes, los productos más vendidos, la efectividad de las promociones y otros indicadores clave que contribuyan al crecimiento estratégico del negocio.
+
+- **Gestión de Promociones:** Administrar descuentos, campañas promocionales y ofertas especiales de forma dinámica, ajustándolas a las necesidades del mercado y las preferencias de los clientes.
+
+## Situación problemática
+
+En la actualidad, las plataformas de comercio electrónico enfrentan múltiples desafíos para satisfacer las demandas de los consumidores y gestionar sus operaciones de manera eficiente. Entre estos desafíos destacan:
+
+- **Desorganización en el manejo de datos:** Sin una estructura de base de datos adecuada, la información clave sobre productos, clientes, pedidos y envíos se encuentra dispersa, lo que dificulta el acceso, la actualización y el análisis.
+
+- **Falta de integridad referencial:** La ausencia de un modelo relacional puede llevar a errores de datos, duplicaciones o inconsistencias que afectan la experiencia del cliente y las decisiones del negocio.
+
+- **Dificultad para gestionar múltiples categorías de productos y envíos internacionales:** Empresas como Buscalibre deben manejar una amplia variedad de productos y servicios asociados con procesos complejos de importación y logística.
+
+- **Limitaciones en el análisis de datos:** Sin un sistema centralizado, resulta complicado generar reportes analíticos sobre ventas, comportamiento del cliente y desempeño de las promociones.
+
+- **Problemas de escalabilidad:** La falta de un diseño que soporte el crecimiento del negocio puede derivar en sistemas que no se adaptan al aumento de la demanda ni a la expansión a nuevos mercados.
+
+La implementación de una base de datos relacional en MySQL permite resolver estas brechas al proporcionar una solución estructurada, escalable y eficiente para gestionar todas las operaciones de la plataforma. Además, facilita la integración de datos clave, mejorando la toma de decisiones estratégicas, la satisfacción del cliente y la competitividad del negocio.
+
+## Modelo de negocio
+
+La plataforma está diseñada para conectar consumidores con una amplia variedad de productos, destacando libros difíciles de conseguir, productos electrónicos y juegos de mesa. Ofrece envíos nacionales e internacionales con foco en la experiencia del cliente y la eficiencia logística.
+
+- **Propuesta de Valor:** Amplia oferta de productos, envíos confiables y promociones personalizadas.
+
+- **Canales:** Página web y aplicación móvil, integrados con sistemas de pago y logística.
+
+- **Segmentos de Clientes:** Lectores y consumidores interesados en productos únicos o importados.
+
+- **Fuentes de Ingreso:** Venta de productos y campañas promocionales.
+
+- **Procesos Internos:** Gestión centralizada de datos (productos, pedidos, clientes y envíos) mediante la base de datos MySQL, permitiendo análisis y escalabilidad.
+
+---
+
+## Diagrama Relacional
+
+![Diagrama](./images/diagrama/diagrama_buscalibre.png)
+
+---
+
+## Relaciones Principales
+1. **Customers ↔ Countries:** Un cliente pertenece a un país.
+2. **Customers ↔ Reviews:** Un cliente puede realizar muchas reseñas.
+3. **Reviews ↔ Products:** Un producto puede tener muchas reseñas.
+4. **Publishers ↔ Products:** Una editorial puede proveer muchos productos.
+5. **Categories ↔ Products:** Las categorías contienen muchos productos.
+6. **Wishlist ↔ Customers:** Un cliente tiene una lista de deseos.
+7. **Products ↔ Orders:** Muchos productos pueden estar en muchas órdenes.
+8. **Orders ↔ Shipments:** Una orden puede tener muchos envíos.
+9. **Orders ↔ Payments:** Una orden tiene un pago.
+10. **Promotions ↔ Products:** Muchas promociones pueden aplicarse a un producto.
 
 ---
 
@@ -135,7 +198,7 @@ Vincula productos con promociones (muchos a muchos).
   - `PromotionID`: FK hacia `Promotions`.
 
 ### 4. OrderDetails
-Registra los productos comprados en cada pedido.
+Registra los productos comprados en cada pedido(tabla de hechos).
 - **Campos:**
   - `OrderDetailID`: Identificador único (PK).
   - `OrderID`: FK hacia `Orders`.
@@ -144,26 +207,6 @@ Registra los productos comprados en cada pedido.
   - `PriceAtPurchase`: Precio al momento de la compra.
 
 ---
-
-## Relaciones Principales
-1. **Customers ↔ Countries:** Un cliente pertenece a un país.
-2. **Customers ↔ Reviews:** Un cliente puede realizar muchas reseñas.
-3. **Reviews ↔ Products:** Un producto puede tener muchas reseñas.
-4. **Publishers ↔ Products:** Una editorial puede proveer muchos productos.
-5. **Categories ↔ Products:** Las categorías contienen muchos productos.
-6. **Wishlist ↔ Customers:** Un cliente tiene una lista de deseos.
-7. **Products ↔ Orders:** Muchos productos pueden estar en muchas órdenes.
-8. **Orders ↔ Shipments:** Una orden puede tener muchos envíos.
-9. **Orders ↔ Payments:** Una orden tiene un pago.
-10. **Promotions ↔ Products:** Muchas promociones pueden aplicarse a un producto.
-
----
-
-## Diagrama Relacional
-
-![Diagrama](./images/diagrama/diagrama_buscalibre.png)
-
-# SQL_Entrega2
 
 ## Views
 
@@ -241,6 +284,7 @@ Reduce automáticamente el stock disponible de un producto en la tabla products 
   - Objetivo: Controlar y actualizar el inventario en tiempo real para evitar inconsistencias.
   - Tablas Compuestas: products, order_details.
 
+---
 
 ## Proceso detallado de inserción de datos en tablas
 
@@ -261,3 +305,13 @@ Reduce automáticamente el stock disponible de un producto en la tabla products 
 ![8](./images/proceso/8.png)
 
 ![9](./images/proceso/9.png)
+
+---
+
+## Herramientas y tecnologías usadas
+
+- **DBeaver**: Lo utilicé como la herramienta principal para la gestión de bases de datos y la ejecución de scripts SQL.
+
+- **Visual Studio Code:** Lo utilicé para gestionar el control de versiones y subir el proyecto a GitHub.
+
+- **Docker:** Lo utilicé como contenedor para mi base de datos. Así garantizo la consistencia del entorno de desarrollo y facilito el despliegue y la portabilidad del proyecto.
